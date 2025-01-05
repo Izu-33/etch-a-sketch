@@ -1,0 +1,21 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 500px;
+    height: 500px;
+    display: flex;
+    flex-wrap: wrap;
+    border: 2px solid #000;
+}
+
+.square {
+    border: 1px dotted gray;
+    box-sizing: border-box;
+}
