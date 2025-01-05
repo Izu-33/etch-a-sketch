@@ -1,16 +1,23 @@
 const container = document.querySelector('.container');
-const gridSize = 4;
+const gridSizeBtn = document.querySelector('.grid-size-btn');
+const resetBtn = document.querySelector('.reset-btn');
 
-const squareSize = (container.offsetWidth - 4) / gridSize;
+let initialGridSize = 4;
+let maxGridSize = 64;
 
-for (let i = 0; i < gridSize*gridSize; i++) {
-    let div = document.createElement('div');
-    div.className = "square";
-    div.style.width = `${squareSize}px`;
-    div.style.height = `${squareSize}px`;
-    div.addEventListener("mouseover", setColor);
-    container.appendChild(div);
+function createGrid(size) {
+    const squareSize = (container.offsetWidth - 4) / size;
+
+    for (let i = 0; i < size*size; i++) {
+        let div = document.createElement('div');
+        div.className = "square";
+        div.style.width = `${squareSize}px`;
+        div.style.height = `${squareSize}px`;
+        div.addEventListener("mouseover", setColor);
+        container.appendChild(div);
+    }
 }
+
 
 function setColor() {
     this.style.backgroundColor = generateColorCode();
@@ -23,3 +30,29 @@ function generateColorCode() {
 
     return `rgb(${r}, ${g}, ${b})`;
 }
+
+createGrid(initialGridSize);
+
+gridSizeBtn.addEventListener('click', () => {
+    let gridSize = prompt(`Enter the size of the grid (e.g., 10, 16, 40, etc.)
+    Can only take a max of 64 squares
+    - 16 will create a 16X16 grid
+    - 40 will create a 40X40 grid`);
+
+    if (!gridSize) {
+        container.replaceChildren();
+        createGrid(initialGridSize);
+    } else if (gridSize > maxGridSize) {
+        container.replaceChildren();
+        createGrid(maxGridSize);
+    } else {
+        container.replaceChildren();
+        createGrid(gridSize);
+    }
+    
+});
+
+resetBtn.addEventListener('click', () => {
+    container.replaceChildren();
+    createGrid(initialGridSize);
+});
